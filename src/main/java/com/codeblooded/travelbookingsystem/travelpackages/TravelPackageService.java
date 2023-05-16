@@ -1,8 +1,11 @@
 package com.codeblooded.travelbookingsystem.travelpackages;
 
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class TravelPackageService {
     private List<TravelPackage> packages = new ArrayList<>();
     public static final String PKG_ALREADY_EXISTS = "Package Already Exists";
