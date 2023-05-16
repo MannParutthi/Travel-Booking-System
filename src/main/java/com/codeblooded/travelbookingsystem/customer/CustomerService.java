@@ -1,4 +1,4 @@
-package com.codeblooded.travelbookingsystem.travelbookingsystem.customer;
+package com.codeblooded.travelbookingsystem.customer;
 
 import org.springframework.stereotype.Service;
 
