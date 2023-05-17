@@ -19,6 +19,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { CreateCustomerComponent } from './create-customer/create-customer.component';
+import { CreateTravelPackageComponent } from './create-travel-package/create-travel-package.component';
+import { CreateBookingComponent } from './create-booking/create-booking.component';
+import { GetReportComponent } from './get-report/get-report.component';
 
 
 
@@ -26,7 +29,10 @@ import { CreateCustomerComponent } from './create-customer/create-customer.compo
   declarations: [
     AppComponent,
     HomePageComponent,
-    CreateCustomerComponent
+    CreateCustomerComponent,
+    CreateTravelPackageComponent,
+    CreateBookingComponent,
+    GetReportComponent
   ],
   imports: [
     BrowserModule,
