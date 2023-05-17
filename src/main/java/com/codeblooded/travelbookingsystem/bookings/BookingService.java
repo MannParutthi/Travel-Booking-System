@@ -24,7 +24,7 @@ public class BookingService {
 
     public String createBooking(Booking booking) {
         // travel id & customer id exists ?
-        boolean travelPackageExists = travelPackageService.getAllTravelPackages().stream().anyMatch(travelPackage -> travelPackage.getId() == booking.getTravelPackageId());
+        boolean travelPackageExists = travelPackageService.getAllTravelPackages().stream().anyMatch(travelPackage -> travelPackage.getTravelPackageId() == booking.getTravelPackageId());
         boolean customerExists = customerService.getAllCustomers().stream().anyMatch(customer -> customer.getId() == booking.getCustomerId());
 
         if(!travelPackageExists) {

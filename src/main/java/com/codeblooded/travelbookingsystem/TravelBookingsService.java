@@ -24,7 +24,7 @@ public class TravelBookingsService {
             int totalBookings = 0;
             int totalRevenue = 0;
             for(Booking booking : bookingService.getAllBookings()) {
-                if(booking.getTravelPackageId() == travelPackage.getId()) {
+                if(booking.getTravelPackageId() == travelPackage.getTravelPackageId()) {
                     totalBookings++;
                 }
             }
