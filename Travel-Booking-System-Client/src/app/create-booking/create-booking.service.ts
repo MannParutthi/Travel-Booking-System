@@ -1,9 +1,20 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CreateBookingService {
+  private baseUrl = "http://localhost:8081/api/v1";
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
+
+  createBooking(booking: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/bookings/create`, booking, { responseType: 'text' }) as Observable<any>;
+  }
+
+  getAllBookings(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/bookings/all`) as Observable<any>;
+  }
 }
