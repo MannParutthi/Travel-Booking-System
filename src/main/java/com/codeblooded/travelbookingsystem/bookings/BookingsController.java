@@ -14,7 +14,7 @@ public class BookingsController {
     private BookingService bookingsService;
 
     @PostMapping("/create")
-    public ResponseEntity<String> createBooking(Booking booking) {
+    public ResponseEntity<String> createBooking(@RequestBody Booking booking) {
         String response = bookingsService.createBooking(booking);
         if(response == BookingService.BOOKING_ALREADY_EXISTS) {
             return new ResponseEntity<String>(response, HttpStatus.CONFLICT);

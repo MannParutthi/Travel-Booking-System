@@ -13,7 +13,7 @@ public class TravelPackagesController {
     private TravelPackageService travelPackageService;
 
     @PostMapping("/create")
-    public ResponseEntity<String> createTravelPackage(TravelPackage travelPackage) {
+    public ResponseEntity<String> createTravelPackage(@RequestBody TravelPackage travelPackage) {
 
         String response = travelPackageService.createTravelPackage(travelPackage);
         if(response == TravelPackageService.PKG_ALREADY_EXISTS) {
