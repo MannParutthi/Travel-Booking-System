@@ -22,6 +22,7 @@ import { CreateCustomerComponent } from './create-customer/create-customer.compo
 import { CreateTravelPackageComponent } from './create-travel-package/create-travel-package.component';
 import { CreateBookingComponent } from './create-booking/create-booking.component';
 import { GetReportComponent } from './get-report/get-report.component';
+import { UpdateBookingComponent } from './update-booking/update-booking.component';
 
 
 
@@ -32,7 +33,8 @@ import { GetReportComponent } from './get-report/get-report.component';
     CreateCustomerComponent,
     CreateTravelPackageComponent,
     CreateBookingComponent,
-    GetReportComponent
+    GetReportComponent,
+    UpdateBookingComponent
   ],
   imports: [
     BrowserModule,
