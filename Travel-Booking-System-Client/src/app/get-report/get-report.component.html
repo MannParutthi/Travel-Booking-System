@@ -1,3 +1,7 @@
+<div class="container" *ngIf="reportData.length == 0">
+  <h1 class="centeredText"> No Bookings Made Yet !!! </h1>
+</div>
+
 <div class="container" *ngIf="reportData.length > 0">
   <h1>Bookings Report By Travel Package</h1>
   <table mat-table [dataSource]="reportData" class="mat-elevation-z8">
