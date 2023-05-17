@@ -1,0 +1,74 @@
+<div class="container">
+  <form [formGroup]="formGroup">
+    <h1>Create Customer</h1>
+    <div fxLayout="row" fxLayout.xs="column">
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>First Name</mat-label>
+        <input matInput formControlName="firstName" id="firstName"/>
+      </mat-form-field>
+
+      <br>
+
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="lastName" id="lastName"/>
+      </mat-form-field>
+
+      <br>
+
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>Date Of Birth</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="dateOfBirth" id="dateOfBirth"/>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <br />
+
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" id="email"/>
+      </mat-form-field>
+    </div>
+  </form>
+
+  <button mat-raised-button color="primary" (click)="createCustomer()" id="createCustomerBtn">Create Customer</button>
+
+  <br />
+
+  <div *ngIf="createCustomerAPIResponse != undefined"> {{createCustomerAPIResponse}} </div>
+
+</div>
+
+<div class="container" *ngIf="allCustomersList.length > 0">
+  <h1>List of all Customers</h1>
+  <table mat-table [dataSource]="allCustomersList" class="mat-elevation-z8">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> Id. </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="firstName">
+      <th mat-header-cell *matHeaderCellDef> First Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="lastName">
+      <th mat-header-cell *matHeaderCellDef> Last Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="dateOfBirth">
+      <th mat-header-cell *matHeaderCellDef> Date Of Birth </th>
+      <td mat-cell *matCellDef="let element"> {{element.dateOfBirth | date: 'dd-MM-yyyy'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> Email </th>
+      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

@@ -16,7 +16,7 @@ public class CustomerService {
         if(customers.contains(customer)) {
             return CX_ALREADY_EXISTS;
         }
-        customers.add(customer);
+        customers.add(new Customer(customer.getFirstName(), customer.getLastName(), customer.getDateOfBirth(), customer.getEmail()));
         return CX_CREATED_SUCCESSFULLY;
     }
 
