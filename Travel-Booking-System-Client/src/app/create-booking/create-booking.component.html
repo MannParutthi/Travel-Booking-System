@@ -1,17 +1,29 @@
-<div class="container">
+<div class="container" *ngIf="allCustomersList.length == 0">
+  <h1 class="centeredText"> No Customer Exists !!! </h1>
+</div>
+
+<div class="container" *ngIf="allTravelPackagesList.length == 0">
+  <h1 class="centeredText"> No Travel Packages Exists !!! </h1>
+</div>
+
+<div class="container" *ngIf="allCustomersList.length > 0 && allTravelPackagesList.length > 0">
   <form [formGroup]="formGroup">
     <h1>Create Booking</h1>
     <div fxLayout="row" fxLayout.xs="column">
       <mat-form-field appearance="outline" class="field">
         <mat-label>Customer Id</mat-label>
-        <input matInput type="number" formControlName="customerId" id="customerId"/>
+        <mat-select formControlName="customerId" id="customerId">
+          <mat-option *ngFor="let customer of allCustomersList" [value]="customer.id">{{customer.id}}</mat-option>
+        </mat-select>
       </mat-form-field>
 
       <br>
 
       <mat-form-field appearance="outline" class="field">
         <mat-label>Travel Package Id</mat-label>
-        <input matInput type="number" formControlName="travelPackageId" id="travelPackageId"/>
+        <mat-select formControlName="travelPackageId" id="travelPackageId">
+          <mat-option *ngFor="let package of allTravelPackagesList" [value]="package.id">{{package.id}}</mat-option>
+        </mat-select>
       </mat-form-field>
 
       <br>

@@ -17,4 +17,12 @@ export class CreateBookingService {
   getAllBookings(): Observable<any> {
     return this.http.get(`${this.baseUrl}/bookings/all`) as Observable<any>;
   }
+
+  getAllCustomers(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/customers/all`) as Observable<any>;
+  }
+
+  getAllTravelPackages(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/tourist-packages/all`) as Observable<any>;
+  }
 }

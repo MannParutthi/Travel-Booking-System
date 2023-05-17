@@ -21,11 +21,17 @@ export class CreateBookingComponent implements OnInit {
 
   allBookingsList: any[] = [];
 
+  allCustomersList: any[] = [];
+
+  allTravelPackagesList: any[] = [];
+
   displayedColumns: string[] = ['id', 'customerId', 'travelPackageId', 'departureDate', 'bookingStatus'];
 
   constructor(private formBuilder: FormBuilder, private createBookingService: CreateBookingService) { }
 
   ngOnInit(): void {
+    this.getAllCustomers();
+    this.getAllTravelPackages();
   }
 
   createBooking() {
@@ -44,4 +50,17 @@ export class CreateBookingComponent implements OnInit {
     });
   }
 
+  getAllCustomers() {
+    this.createBookingService.getAllCustomers().subscribe((res) => {
+      this.allCustomersList = res;
+      console.log("getAllCustomers ==> " + res);
+    });
+  }
+
+  getAllTravelPackages() {
+    this.createBookingService.getAllTravelPackages().subscribe((res) => {
+      this.allTravelPackagesList = res;
+      console.log("getAllTravelPackages ==> " + res);
+    });
+  }
 }
