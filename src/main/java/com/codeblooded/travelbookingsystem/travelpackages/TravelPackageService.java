@@ -16,7 +16,14 @@ public class TravelPackageService {
         if(packages.contains(travelPackage)) {
             return PKG_ALREADY_EXISTS;
         }
-        packages.add(travelPackage);
+        packages.add(new TravelPackage(
+                travelPackage.getDestinationCity(),
+                travelPackage.getDestinationCountry(),
+                travelPackage.getNoOfDays(),
+                travelPackage.getNoOfNights(),
+                travelPackage.getHotelName(),
+                travelPackage.getPrice(),
+                travelPackage.getActivitiesIncluded()));
         return PKG_CREATED_SUCCESSFULLY;
     }
 

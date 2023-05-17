@@ -37,7 +37,7 @@ public class BookingService {
         if(bookings.contains(booking)) {
             return BOOKING_ALREADY_EXISTS;
         }
-        bookings.add(booking);
+        bookings.add(new Booking(booking.getCustomerId(), booking.getTravelPackageId(), booking.getDepartureDate(), booking.getBookingStatus()));
         return BOOKING_CREATED_SUCCESSFULLY;
     }
 
