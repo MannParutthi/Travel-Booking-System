@@ -32,6 +32,7 @@ export class CreateBookingComponent implements OnInit {
   ngOnInit(): void {
     this.getAllCustomers();
     this.getAllTravelPackages();
+    this.getAllBookings();
   }
 
   createBooking() {

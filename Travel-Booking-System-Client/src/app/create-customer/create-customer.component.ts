@@ -26,6 +26,7 @@ export class CreateCustomerComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private createCustomerService: CreateCustomerService) { }
 
   ngOnInit(): void {
+    this.getAllCustomers();
   }
 
   createCustomer() {

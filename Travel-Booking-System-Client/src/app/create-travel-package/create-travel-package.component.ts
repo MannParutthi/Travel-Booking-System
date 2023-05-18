@@ -30,6 +30,7 @@ export class CreateTravelPackageComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private packageService: CreateTravelPackageService) { }
 
   ngOnInit(): void {
+    this.getAllPackages();
   }
 
   createPackage() {
