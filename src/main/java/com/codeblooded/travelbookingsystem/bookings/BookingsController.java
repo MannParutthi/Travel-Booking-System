@@ -23,7 +23,7 @@ public class BookingsController {
     }
 
     @PutMapping("/update/{bookingId}")
-    public ResponseEntity<String> updateBooking(@PathVariable("bookingId") String bookingId, Booking booking) {
+    public ResponseEntity<String> updateBooking(@PathVariable("bookingId") String bookingId, @RequestBody Booking booking) {
         String response = bookingsService.updateBooking(Integer.parseInt(bookingId), booking);
         if(response == BookingService.BOOKING_NOT_FOUND) {
             return new ResponseEntity<String>(response, HttpStatus.NOT_FOUND);

@@ -12,7 +12,7 @@ export class UpdateBookingService {
 
   updateBooking(booking: any): Observable<any> {
     let bookingId = booking.id;
-    return this.http.post(`${this.baseUrl}/bookings/update${bookingId}`, booking, { responseType: 'text' }) as Observable<any>;
+    return this.http.put(`${this.baseUrl}/bookings/update/${bookingId}`, booking, { responseType: 'text' }) as Observable<any>;
   }
 
   getAllBookings(): Observable<any> {
