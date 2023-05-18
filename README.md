@@ -1,7 +1,7 @@
 # Team Codeblooded - Travel Booking System
 
 
-## Requirements
+## <u> Requirements </u>
 
 This application's frontend is built using Angular and the backend is built using Spring boot.
 
@@ -18,7 +18,7 @@ For building and running the application you need:
 <hr/>
 
 
-## Clone the Repository
+## <u> Clone the Repository </u>
 
 [Link to GitHub Repository](https://github.com/MannParutthi/Travel-Booking-System)
 
@@ -31,30 +31,33 @@ git clone https://github.com/MannParutthi/Travel-Booking-System
 <hr/>
 
 
-## Running the Server (Backend: API's)
+## <u> Running the Server (Backend: API's) </u> 
 
-### Import the Project in IntelliJ
+## Import the Project in IntelliJ
 
 To import the project in IntelliJ, follow these steps:
 
 1. Open IntelliJ IDEA.
 2. Click on `File` in the top menu and select `Open`.
-3. Navigate to the directory where you cloned the repository and select the server folder 'Travel-Booking-System-Server/'.
+3. Navigate to the directory where you cloned the repository and select the folder.
 4. Click `OK`.
 
 IntelliJ will import the project and download any required dependencies.
 
-### Run the Application
+## Run the Application
 
 To run the application, follow these steps:
 
-1. Open the project in IntelliJ.
-2. In the project panel, navigate to `src/main/java/com/codeblooded/travelbookingsystem/TravelbookingsystemApplication.java`.
-3. Right-click on the file and select `Run TravelbookingsystemApplication.main()`.
-4. Wait for the application to start. You should see a message in the console saying `Tomcat started on port(s): 8081`.
+1. In the project panel, navigate to `src/main/java/com/codeblooded/travelbookingsystem/TravelbookingsystemApplication.java`.
+2. Right-click on the file and select `Run TravelbookingsystemApplication.main()`.
+3. Wait for the application to start. You should see a message in the console saying `Tomcat started on port(s): 8081`.
 
 
-### Call and Test the API's using Swagger
+## Test the API's using Swagger (Testing during development)
+
+Swagger / OpenAPI, is a specification and toolset used to describe and interact with RESTful web services.
+
+With Swagger, we can use a web-based UI that allows interactation with the API endpoints and test its functionality. This UI is automatically generated based on the OpenAPI specification and provides a user-friendly interface for sending requests, inspecting responses, and debugging issues.
 
 To access Swagger, follow these steps:
 
@@ -65,13 +68,23 @@ To access Swagger, follow these steps:
 <hr/>
 
 
-## Running the Client (Frontend)
+## <u> Running the Client (Frontend) </u>
 
-Navigate to the directory 'Travel-Booking-System-Client/' and run the following commands:
+Open a terminal instance inside the folder where you cloned the repository and run the following commands:
 
 ```
+cd Travel-Booking-System-Client/
+```
+Now run the following commands:
+```
 npm install
+```
+
+This installs the required dependencies for the frontend.
+
+Now run:
+```
 npm run start
 ```
 
-This installs the required dependencies for the frontend, and if everthing works correctly, you can access the application locally at [`http://localhost:4200`](http://localhost:4200).
+Provided you have installed all the necessary dependencies, you will be able to access the application locally at [`http://localhost:4200`](http://localhost:4200).
