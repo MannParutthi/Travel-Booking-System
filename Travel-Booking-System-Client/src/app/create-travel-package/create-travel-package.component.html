@@ -1,1 +1,104 @@
-<p>create-travel-package works!</p>
+<div class="container">
+    <form [formGroup]="formGroup">
+      <h1>Create Package</h1>
+      <div fxLayout="column">
+  
+  
+        <mat-form-field appearance="outline" class="field">
+          <mat-label>Destination City</mat-label>
+          <input matInput formControlName="destinationCity" id="destinationCity" class="small-input" />
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline" class="field">
+          <mat-label>Destination Country</mat-label>
+          <input matInput formControlName="destinationCountry" id="destinationCountry" class="small-input" />
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline" class="field">
+          <mat-label>No. of Days</mat-label>
+          <input matInput type="number" formControlName="noOfDays" id="noOfDays" class="small-input" />
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline" class="field">
+          <mat-label>No. of Nights</mat-label>
+          <input matInput type="number" formControlName="noOfNights" id="noOfNights" class="small-input" />
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline" class="field">
+          <mat-label>Hotel Name</mat-label>
+          <input matInput formControlName="hotelName" id="hotelName" class="small-input" />
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline" class="field">
+          <mat-label>Price</mat-label>
+          <input matInput type="number" formControlName="price" id="price" class="small-input" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="field">
+            <mat-label>Activities Included</mat-label>
+            <input matInput type="text" formControlName="activitiesIncluded" id="activitiesIncluded" required>
+          </mat-form-field>
+  
+      </div>
+    </form>
+  
+    <button mat-raised-button color="primary" (click)="createPackage()" id="createPackageBtn">Create Package</button>
+  
+    <br />
+  
+    <div *ngIf="createPackageAPIResponse !== undefined">{{ createPackageAPIResponse }}</div>
+  </div>
+
+  <div class="container" *ngIf="allPackagesList.length > 0">
+    <h1>List of all Packages</h1>
+    
+    <table mat-table [dataSource]="allPackagesList" class="mat-elevation-z8">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> Package Id </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="destinationCity">
+          <th mat-header-cell *matHeaderCellDef> Destination City </th>
+          <td mat-cell *matCellDef="let element"> {{element.destinationCity}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="destinationCountry">
+          <th mat-header-cell *matHeaderCellDef> Destination Country </th>
+          <td mat-cell *matCellDef="let element"> {{element.destinationCountry}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="hotelName">
+          <th mat-header-cell *matHeaderCellDef> Hotel Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.hotelName}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="noOfDays">
+          <th mat-header-cell *matHeaderCellDef>No of Days</th>
+          <td mat-cell *matCellDef="let element"> {{element.noOfDays}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="noOfNights">
+            <th mat-header-cell *matHeaderCellDef>No of Nights</th>
+            <td mat-cell *matCellDef="let element"> {{element.noOfNights}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef>Price</th>
+            <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="activitiesIncluded">
+            <th mat-header-cell *matHeaderCellDef> Activities Included </th>
+            <td mat-cell *matCellDef="let element">
+              <ul>
+                <li *ngFor="let activity of element.activitiesIncluded">{{ activity }}</li>
+              </ul>
+            </td>
+          </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+  </div>
+  
