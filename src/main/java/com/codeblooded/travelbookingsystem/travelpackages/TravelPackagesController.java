@@ -22,6 +22,15 @@ public class TravelPackagesController {
         return new ResponseEntity<String>(response, HttpStatus.CREATED);
     }
 
+    @PutMapping("/update/{travelPackageId}")
+    public ResponseEntity<String> updateTravelPackage(@PathVariable int travelPackageId, @RequestBody TravelPackage travelPackage) {
+        String response = travelPackageService.updateTravelPackage(travelPackageId, travelPackage);
+        if(response == TravelPackageService.TRAVEL_PACKAGE_NOT_FOUND) {
+            return new ResponseEntity<String>(response, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<String>(response, HttpStatus.OK);
+    }
+
     @GetMapping("/all")
     public ResponseEntity<Iterable<TravelPackage>> getAllTravelPackages() {
         return new ResponseEntity<Iterable<TravelPackage>>(travelPackageService.getAllTravelPackages(), HttpStatus.OK);

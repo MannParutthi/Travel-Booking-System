@@ -17,4 +17,16 @@ export class CreateTravelPackageService {
   getAllPackages(): Observable<any> {
     return this.http.get(`${this.baseUrl}/tourist-packages/all`) as Observable<any>;
   }
+
+  getAllFlights(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/flights/all`) as Observable<any>;
+  }
+
+  getAllHotels(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/hotels/all`) as Observable<any>;
+  }
+
+  getAllActivities(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/activities/all`) as Observable<any>;
+  }
 }

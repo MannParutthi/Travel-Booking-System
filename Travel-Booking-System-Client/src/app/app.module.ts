@@ -13,6 +13,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table';
+import { MatListModule } from '@angular/material/list';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -53,6 +54,7 @@ import { UpdateBookingComponent } from './update-booking/update-booking.componen
     MatSelectModule,
     MatSidenavModule,
     MatTableModule,
+    MatListModule,
     HttpClientModule,
   ],
   providers: [MatDatepickerModule],
