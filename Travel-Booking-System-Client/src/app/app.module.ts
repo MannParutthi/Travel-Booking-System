@@ -25,6 +25,7 @@ import { CreateBookingComponent } from './create-booking/create-booking.componen
 import { GetReportComponent } from './get-report/get-report.component';
 import { UpdateBookingComponent } from './update-booking/update-booking.component';
 import { UpdateTravelPackageComponent } from './update-travel-package/update-travel-package.component';
+import { UserLoginComponent } from './user-login/user-login.component';
 
 
 
@@ -37,7 +38,8 @@ import { UpdateTravelPackageComponent } from './update-travel-package/update-tra
     CreateBookingComponent,
     GetReportComponent,
     UpdateBookingComponent,
-    UpdateTravelPackageComponent
+    UpdateTravelPackageComponent,
+    UserLoginComponent
   ],
   imports: [
     BrowserModule,

@@ -17,7 +17,7 @@ public class BookingsController {
     public ResponseEntity<String> createBooking(@RequestBody Booking booking) {
         String response = bookingsService.createBooking(booking);
         if(response == BookingService.BOOKING_ALREADY_EXISTS) {
-            return new ResponseEntity<String>(response, HttpStatus.CONFLICT);
+            return new ResponseEntity<String>(response, HttpStatus.OK);
         }
         return new ResponseEntity<String>(response, HttpStatus.CREATED);
     }
@@ -26,7 +26,7 @@ public class BookingsController {
     public ResponseEntity<String> updateBooking(@PathVariable("bookingId") String bookingId, @RequestBody Booking booking) {
         String response = bookingsService.updateBooking(Integer.parseInt(bookingId), booking);
         if(response == BookingService.BOOKING_NOT_FOUND) {
-            return new ResponseEntity<String>(response, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<String>(response, HttpStatus.OK);
         }
         return new ResponseEntity<String>(response, HttpStatus.OK);
     }

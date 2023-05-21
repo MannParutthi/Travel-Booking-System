@@ -13,7 +13,7 @@
       <mat-form-field appearance="outline" class="field">
         <mat-label>Customer Id</mat-label>
         <mat-select formControlName="customerId" id="customerId">
-          <mat-option *ngFor="let customer of allCustomersList" [value]="customer.id">{{customer.id}}</mat-option>
+          <mat-option *ngFor="let user of allCustomersList" [value]="user.id">{{user.id}}</mat-option>
         </mat-select>
       </mat-form-field>
 

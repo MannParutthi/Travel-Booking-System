@@ -1,9 +1,4 @@
 <div class="centeredContent">
-  <button mat-raised-button color="primary" style="margin: 20px" routerLink="/create-customer">
-    Create Customer
-  </button>
-
-  <br>
 
   <button mat-raised-button color="primary" style="margin: 20px" routerLink="/create-travel-package">
     Create Travel Package
@@ -31,6 +26,12 @@
 
   <button mat-raised-button color="primary" style="margin: 20px" routerLink="/get-report">
     Get Report
+  </button>
+
+  <br>
+
+  <button *ngIf=" loggedUser != null " mat-raised-button color="primary" style="margin: 20px" (click)="logout()">
+    Logout
   </button>
 </div>
 
