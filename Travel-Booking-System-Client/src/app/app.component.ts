@@ -8,7 +8,9 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements OnInit{
 
+  loggedUser: any
   constructor(private _router: Router) {
+    this.loggedUser = localStorage.getItem("user")
   }
   
   title = 'Travel-Booking-System-Client';

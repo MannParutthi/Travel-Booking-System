@@ -17,7 +17,7 @@ public class TravelPackagesController {
 
         String response = travelPackageService.createTravelPackage(travelPackage);
         if(response == TravelPackageService.PKG_ALREADY_EXISTS) {
-            return new ResponseEntity<String>(response, HttpStatus.CONFLICT);
+            return new ResponseEntity<String>(response, HttpStatus.OK);
         }
         return new ResponseEntity<String>(response, HttpStatus.CREATED);
     }
@@ -26,7 +26,7 @@ public class TravelPackagesController {
     public ResponseEntity<String> updateTravelPackage(@PathVariable("travelPackageId") String travelPackageId, @RequestBody TravelPackage travelPackage) {
         String response = travelPackageService.updateTravelPackage(Integer.parseInt(travelPackageId), travelPackage);
         if(response == TravelPackageService.TRAVEL_PACKAGE_NOT_FOUND) {
-            return new ResponseEntity<String>(response, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<String>(response, HttpStatus.OK);
         }
         return new ResponseEntity<String>(response, HttpStatus.OK);
     }
