@@ -23,8 +23,8 @@ public class TravelPackagesController {
     }
 
     @PutMapping("/update/{travelPackageId}")
-    public ResponseEntity<String> updateTravelPackage(@PathVariable int travelPackageId, @RequestBody TravelPackage travelPackage) {
-        String response = travelPackageService.updateTravelPackage(travelPackageId, travelPackage);
+    public ResponseEntity<String> updateTravelPackage(@PathVariable("travelPackageId") String travelPackageId, @RequestBody TravelPackage travelPackage) {
+        String response = travelPackageService.updateTravelPackage(Integer.parseInt(travelPackageId), travelPackage);
         if(response == TravelPackageService.TRAVEL_PACKAGE_NOT_FOUND) {
             return new ResponseEntity<String>(response, HttpStatus.NOT_FOUND);
         }
