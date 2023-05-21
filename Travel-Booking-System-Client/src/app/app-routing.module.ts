@@ -7,11 +7,13 @@ import { CreateBookingComponent } from './create-booking/create-booking.componen
 import { CreateTravelPackageComponent } from './create-travel-package/create-travel-package.component';
 import { UpdateBookingComponent } from './update-booking/update-booking.component';
 import { UpdateTravelPackageComponent } from './update-travel-package/update-travel-package.component';
+import { UserLoginComponent } from './user-login/user-login.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: "login", component: UserLoginComponent },
   { path: "home", component: HomePageComponent },
-  { path: "create-customer", component: CreateCustomerComponent },
+  { path: "create-user", component: CreateCustomerComponent },
   { path: "create-travel-package", component: CreateTravelPackageComponent },
   { path: "update-travel-package", component: UpdateTravelPackageComponent },
   { path: "create-booking", component: CreateBookingComponent },

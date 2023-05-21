@@ -13,7 +13,7 @@ public class Booking {
     private static final AtomicInteger count = new AtomicInteger(30000);
     private final int id = count.incrementAndGet();
 
-    private int customerId;
+    private int userId;
     private int travelPackageId;
     private String departureDate;
     private BookingStatus bookingStatus = BookingStatus.CONFIRMED;
