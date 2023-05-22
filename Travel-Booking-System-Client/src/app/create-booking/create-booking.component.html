@@ -36,14 +36,6 @@
       </mat-form-field>
 
       <br />
-
-      <mat-form-field appearance="outline" class="field">
-        <mat-label>Booking Status</mat-label>
-        <mat-select formControlName="bookingStatus" id="bookingStatus">
-          <mat-option value="CONFIRMED">CONFIRMED</mat-option>
-          <mat-option value="CANCELLED">CANCELLED</mat-option>
-        </mat-select>
-      </mat-form-field>
     </div>
   </form>
 
@@ -51,7 +43,9 @@
 
   <br />
 
-  <div *ngIf="createBookingAPIResponse != undefined"> {{createBookingAPIResponse}} </div>
+  <div *ngIf="createBookingAPIResponse != undefined">
+    <h2>{{ createBookingAPIResponse.message }}</h2>
+  </div>
 
 </div>
 
