@@ -36,7 +36,6 @@ export class CreateBookingComponent implements OnInit {
   }
 
   createBooking() {
-    debugger;
     console.log("createBookingFormGroup ==> " + JSON.stringify(this.formGroup.getRawValue()));
     this.createBookingService.createBooking(this.formGroup.getRawValue()).subscribe((res) => {
       console.log("createBookingAPIResponse ==> " + res);
