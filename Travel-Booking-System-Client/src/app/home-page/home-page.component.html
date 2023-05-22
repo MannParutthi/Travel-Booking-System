@@ -1,34 +1,31 @@
 <div class="centeredContent">
 
+  <div style="width: 100%; background-color: burlywood; padding: 1%;" mat-line>
+    Hello {{ loggedUser.firstName | uppercase }}
+  </div>
+  <br>
+
   <button mat-raised-button color="primary" style="margin: 20px" routerLink="/create-travel-package">
     Create Travel Package
   </button>
 
-  <br>
-
-  <button mat-raised-button color="primary" style="margin: 20px" routerLink="/update-travel-package">
+  <button *ngIf="loggedUser.userType != 'CUSTOMER'" mat-raised-button color="primary" style="margin: 20px" routerLink="/update-travel-package">
     Update Travel Package
   </button>
-
-  <br>
 
   <button mat-raised-button color="primary" style="margin: 20px" routerLink="/create-booking">
     Create Booking
   </button>
 
-  <br>
-
   <button mat-raised-button color="primary" style="margin: 20px" routerLink="/update-booking">
     Update Booking
   </button>
 
-  <br>
-
-  <button mat-raised-button color="primary" style="margin: 20px" routerLink="/get-report">
+  <button *ngIf="loggedUser.userType != 'CUSTOMER'" mat-raised-button color="primary" style="margin: 20px" routerLink="/get-report">
     Get Report
   </button>
 
-  <br>
+  <br><br>
 
   <button *ngIf=" loggedUser != null " mat-raised-button color="primary" style="margin: 20px" (click)="logout()">
     Logout
