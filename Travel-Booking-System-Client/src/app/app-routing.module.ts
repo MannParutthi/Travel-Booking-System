@@ -8,6 +8,7 @@ import { CreateTravelPackageComponent } from './create-travel-package/create-tra
 import { UpdateBookingComponent } from './update-booking/update-booking.component';
 import { UpdateTravelPackageComponent } from './update-travel-package/update-travel-package.component';
 import { UserLoginComponent } from './user-login/user-login.component';
+import {PaymentComponent} from "./payment/payment.component";
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: "create-booking", component: CreateBookingComponent },
   { path: "update-booking", component: UpdateBookingComponent },
   { path: "get-report", component: GetReportComponent },
+  {path: 'payment/:bookingId', component: PaymentComponent },
   { path: "**", redirectTo: 'home' }
 ];
 

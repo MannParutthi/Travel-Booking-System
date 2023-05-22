@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CreateBookingService } from './create-booking.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-booking',
@@ -13,8 +14,7 @@ export class CreateBookingComponent implements OnInit {
     'id': [0, []],
     'customerId': [null, []],
     'travelPackageId': [null, []],
-    'departureDate': [null, []],
-    'bookingStatus': [null, []],
+    'departureDate': [null, []]
   });
 
   createBookingAPIResponse: any;
@@ -27,7 +27,7 @@ export class CreateBookingComponent implements OnInit {
 
   displayedColumns: string[] = ['id', 'customerId', 'travelPackageId', 'departureDate', 'bookingStatus'];
 
-  constructor(private formBuilder: FormBuilder, private createBookingService: CreateBookingService) { }
+  constructor(private formBuilder: FormBuilder, private createBookingService: CreateBookingService, private router: Router) { }
 
   ngOnInit(): void {
     this.getAllCustomers();
@@ -36,11 +36,19 @@ export class CreateBookingComponent implements OnInit {
   }
 
   createBooking() {
+    debugger;
     console.log("createBookingFormGroup ==> " + JSON.stringify(this.formGroup.getRawValue()));
     this.createBookingService.createBooking(this.formGroup.getRawValue()).subscribe((res) => {
       console.log("createBookingAPIResponse ==> " + res);
       this.createBookingAPIResponse = res;
       this.getAllBookings();
+
+      const bookingId = JSON.parse(res).bookingId;
+
+      // Navigate to the payment page with the booking ID parameter.
+      this.router.navigate(['/payment', bookingId]);
+    }, (error) => {
+      console.log("createBookingAPIError ==> " + error);
     });
   }
 
