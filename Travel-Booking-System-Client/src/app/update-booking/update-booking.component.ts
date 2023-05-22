@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { UpdateBookingService } from './update-booking.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-update-booking',
@@ -21,9 +22,17 @@ export class UpdateBookingComponent implements OnInit {
 
   allBookingsList: any[] = [];
 
+  loggedUser: any
+
   displayedColumns: string[] = ['id', 'customerId', 'travelPackageId', 'departureDate', 'bookingStatus'];
 
-  constructor(private formBuilder: FormBuilder, private updateBookingService: UpdateBookingService) { }
+  constructor(private formBuilder: FormBuilder, private updateBookingService: UpdateBookingService, private _router: Router) { 
+    this.loggedUser = localStorage.getItem("user")
+    if (!this.loggedUser) {
+      this._router.navigateByUrl('/login')
+    }
+    this.loggedUser = JSON.parse(this.loggedUser)
+  }
 
   ngOnInit(): void {
     this.getAllBookings();
@@ -41,6 +50,9 @@ export class UpdateBookingComponent implements OnInit {
   getAllBookings() {
     this.updateBookingService.getAllBookings().subscribe((res) => {
       this.allBookingsList = res;
+      if(this.loggedUser.userType == "CUSTOMER") {
+        this.allBookingsList = this.allBookingsList.filter((booking) => booking.customerId === this.loggedUser.id)
+      }
       console.log("getAllBookings ==> " + res);
     });
   }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UpdateTravelPackageService } from './update-travel-package.service';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-update-travel-package',
@@ -34,9 +35,19 @@ export class UpdateTravelPackageComponent implements OnInit {
 
   displayedColumns: string[] = ['id', 'destination', 'noOfDays', 'flight', 'hotel', 'activitiesIncluded', 'price'];
 
-  constructor(private formBuilder: FormBuilder, private packageService: UpdateTravelPackageService) { }
+  loggedUser: any
+
+  constructor(private _router: Router, private formBuilder: FormBuilder, private packageService: UpdateTravelPackageService) { }
 
   ngOnInit(): void {
+    this.loggedUser = localStorage.getItem("user")
+    if(!this.loggedUser) {
+      this._router.navigateByUrl('/login')
+    }
+    this.loggedUser = JSON.parse(this.loggedUser)
+    if(this.loggedUser.userType == "CUSTOMER") {
+      this._router.navigateByUrl('/home')
+    }
     this.getAllPackages();
     this.getAllFlights();
     this.getAllHotels();

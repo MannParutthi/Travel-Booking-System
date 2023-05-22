@@ -10,12 +10,20 @@
   <form [formGroup]="formGroup">
     <h1>Create Booking</h1>
     <div fxLayout="row" fxLayout.xs="column">
-      <mat-form-field appearance="outline" class="field">
-        <mat-label>Customer Id</mat-label>
-        <mat-select formControlName="customerId" id="customerId">
-          <mat-option *ngFor="let user of allCustomersList" [value]="user.id">{{user.id}}</mat-option>
-        </mat-select>
-      </mat-form-field>
+      <ng-container *ngIf="loggedUser.userType != 'CUSTOMER'; else elseTemplate">
+        <mat-form-field appearance="outline" class="field">
+          <mat-label>Customer Id</mat-label>
+          <mat-select formControlName="customerId" id="customerId">
+            <mat-option *ngFor="let user of allCustomersList" [value]="user.id">{{user.id}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
+      <ng-template #elseTemplate>
+        <mat-form-field appearance="outline" class="field">
+          <mat-label>Customer Id</mat-label>
+          <input matInput formControlName="customerId" id="customerId" [(ngModel)]="loggedUser.id" readonly>
+        </mat-form-field>
+      </ng-template>
 
       <br>
 

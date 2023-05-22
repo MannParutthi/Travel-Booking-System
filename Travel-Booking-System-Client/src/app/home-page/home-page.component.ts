@@ -10,6 +10,7 @@ export class HomePageComponent implements OnInit {
 
   constructor(private _router: Router) {
     this.loggedUser = localStorage.getItem("user")
+    this.loggedUser = JSON.parse(this.loggedUser)
   }
 
   loggedUser: any

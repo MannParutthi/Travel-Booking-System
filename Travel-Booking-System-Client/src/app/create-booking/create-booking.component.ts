@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { CreateBookingService } from './create-booking.service';
 import { Router } from '@angular/router';
 
@@ -27,7 +27,15 @@ export class CreateBookingComponent implements OnInit {
 
   displayedColumns: string[] = ['id', 'customerId', 'travelPackageId', 'departureDate', 'bookingStatus'];
 
-  constructor(private formBuilder: FormBuilder, private createBookingService: CreateBookingService, private router: Router) { }
+  loggedUser: any
+
+  constructor(private formBuilder: FormBuilder, private createBookingService: CreateBookingService, private router: Router) { 
+    this.loggedUser = localStorage.getItem("user")
+    if (!this.loggedUser) {
+      this.router.navigateByUrl('/login')
+    }
+    this.loggedUser = JSON.parse(this.loggedUser)
+  }
 
   ngOnInit(): void {
     this.getAllCustomers();
@@ -54,6 +62,9 @@ export class CreateBookingComponent implements OnInit {
   getAllBookings() {
     this.createBookingService.getAllBookings().subscribe((res) => {
       this.allBookingsList = res;
+      if(this.loggedUser.userType == "CUSTOMER") {
+        this.allBookingsList = this.allBookingsList.filter((booking) => booking.customerId === this.loggedUser.id)
+      }
       console.log("getAllBookings ==> " + res);
     });
   }
