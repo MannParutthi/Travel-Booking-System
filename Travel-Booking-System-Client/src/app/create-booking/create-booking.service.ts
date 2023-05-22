@@ -25,4 +25,8 @@ export class CreateBookingService {
   getAllTravelPackages(): Observable<any> {
     return this.http.get(`${this.baseUrl}/tourist-packages/all`) as Observable<any>;
   }
+
+  confirmBooking(bookingId: string): Observable<any> {
+    return this.http.put(`${this.baseUrl}/bookings/confirm/${bookingId}`, null, { responseType: 'text' }) as Observable<any>;
+  }
 }

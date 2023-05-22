@@ -8,14 +8,15 @@ import java.util.concurrent.atomic.AtomicInteger;
 @AllArgsConstructor // Lombok annotation to generate constructor with all the attributes
 @Data // Lombok annotation to generate getters and setters
 public class Booking {
-    public enum BookingStatus { CONFIRMED, CANCELLED }
+    public enum BookingStatus { CONFIRMED, CANCELLED, PENDING }
 
     private static final AtomicInteger count = new AtomicInteger(30000);
     private final int id = count.incrementAndGet();
 
-    private int userId;
+    private int customerId;
     private int travelPackageId;
     private String departureDate;
-    private BookingStatus bookingStatus = BookingStatus.CONFIRMED;
+    private int paymentId;
+    private BookingStatus bookingStatus = BookingStatus.PENDING;
 }
 

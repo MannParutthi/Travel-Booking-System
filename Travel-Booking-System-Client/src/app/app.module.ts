@@ -26,6 +26,7 @@ import { GetReportComponent } from './get-report/get-report.component';
 import { UpdateBookingComponent } from './update-booking/update-booking.component';
 import { UpdateTravelPackageComponent } from './update-travel-package/update-travel-package.component';
 import { UserLoginComponent } from './user-login/user-login.component';
+import { PaymentComponent } from './payment/payment.component';
 
 
 
@@ -39,7 +40,8 @@ import { UserLoginComponent } from './user-login/user-login.component';
     GetReportComponent,
     UpdateBookingComponent,
     UpdateTravelPackageComponent,
-    UserLoginComponent
+    UserLoginComponent,
+    PaymentComponent
   ],
   imports: [
     BrowserModule,
