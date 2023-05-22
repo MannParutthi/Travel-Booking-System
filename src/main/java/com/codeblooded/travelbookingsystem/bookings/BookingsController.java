@@ -14,12 +14,13 @@ public class BookingsController {
     private BookingService bookingsService;
 
     @PostMapping("/create")
-    public ResponseEntity<String> createBooking(@RequestBody Booking booking) {
-        String response = bookingsService.createBooking(booking);
-        if(response == BookingService.BOOKING_ALREADY_EXISTS) {
-            return new ResponseEntity<String>(response, HttpStatus.CONFLICT);
+    public ResponseEntity<BookingResponse> createBooking(@RequestBody Booking booking) {
+        BookingResponse response = bookingsService.createBooking(booking);
+        if (BookingService.BOOKING_ALREADY_EXISTS.equals(response.getMessage())) {
+            return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+        } else {
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
         }
-        return new ResponseEntity<String>(response, HttpStatus.CREATED);
     }
 
     @PutMapping("/update/{bookingId}")
@@ -34,5 +35,15 @@ public class BookingsController {
     @GetMapping("/all")
     public ResponseEntity<Iterable<Booking>> getAllBookings() {
         return new ResponseEntity<Iterable<Booking>>(bookingsService.getAllBookings(), HttpStatus.OK);
+    }
+
+    @PutMapping("/confirm/{bookingId}")
+    public ResponseEntity<String> confirmBooking(@PathVariable("bookingId") String bookingId) {
+        String response = bookingsService.confirmBooking(Integer.parseInt(bookingId));
+        if (BookingService.BOOKING_NOT_FOUND.equals(response)) {
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
     }
 }
