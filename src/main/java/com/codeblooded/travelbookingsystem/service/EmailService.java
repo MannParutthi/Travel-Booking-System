@@ -1,19 +1,23 @@
 package com.codeblooded.travelbookingsystem.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.mail.MailProperties;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.util.FileCopyUtils;
+import org.springframework.util.StreamUtils;
 
 import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.MessagingException;
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
+
+// For Email templating
+import com.github.mustachejava.DefaultMustacheFactory;
+import com.github.mustachejava.Mustache;
+import com.github.mustachejava.MustacheFactory;
 
 
 @Service
@@ -41,10 +45,37 @@ public class EmailService {
         }
     }
 
+    private String renderHtmlTemplateFromFile(String templateFilePath, AccountRegistrationTemplateData templateData) {
+        try {
+            MustacheFactory mustacheFactory = new DefaultMustacheFactory();
+            Mustache mustache = mustacheFactory.compile(templateFilePath);
+            StringWriter writer = new StringWriter();
+            mustache.execute(writer, templateData).flush();
+
+            return writer.toString();
+        } catch (IOException e) {
+            System.out.println("----- Error in reading HTML Template: " +  templateFilePath +"-----");
+            return null;
+        }
+    }
+
     public void sendAccountRegistrationEmail(String recipientEmail) {
-        String subject = "Welcome to Concordia Travel Booking System !!";
-        String htmlContent = "<html><body><h1>Welcome to the Concordia Travel Booking System!!</h1><p>This is a registration email.</p></body></html>";
+        String subject = "Concordia Travel Booking System: Welcome to Concordia Travel Booking System";
+        AccountRegistrationTemplateData accountRegistrationTemplateData = new AccountRegistrationTemplateData(recipientEmail);
+        String htmlContent = renderHtmlTemplateFromFile("Email-Templates/NewUserRegistrationTemplate.html", accountRegistrationTemplateData);
 
         sendEmailWithTemplate(recipientEmail, subject, htmlContent);
+    }
+
+    private static class AccountRegistrationTemplateData {
+        private final String recipientEmailAddress;
+
+        public AccountRegistrationTemplateData(String recipientName) {
+            this.recipientEmailAddress = recipientName;
+        }
+
+        public String getRecipientEmailAddress() {
+            return recipientEmailAddress;
+        }
     }
 }
