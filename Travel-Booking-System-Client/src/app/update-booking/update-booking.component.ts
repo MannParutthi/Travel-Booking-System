@@ -25,8 +25,9 @@ export class UpdateBookingComponent implements OnInit {
   loggedUser: any
 
   displayedColumns: string[] = ['id', 'customerId', 'travelPackageId', 'departureDate', 'bookingStatus'];
+  selectedBookingId: any;
 
-  constructor(private formBuilder: FormBuilder, private updateBookingService: UpdateBookingService, private _router: Router) { 
+  constructor(private formBuilder: FormBuilder, private updateBookingService: UpdateBookingService, private _router: Router) {
     this.loggedUser = localStorage.getItem("user")
     if (!this.loggedUser) {
       this._router.navigateByUrl('/login')
@@ -54,6 +55,18 @@ export class UpdateBookingComponent implements OnInit {
         this.allBookingsList = this.allBookingsList.filter((booking) => booking.customerId === this.loggedUser.id)
       }
       console.log("getAllBookings ==> " + res);
+    });
+  }
+
+  onBookingIdSelection() {
+    console.log("selectedPackageId ==> " + this.selectedBookingId);
+    let bookingData = this.allBookingsList.find((b) => b.id === this.selectedBookingId);
+    console.log("bookingData ==> " + JSON.stringify(bookingData));
+    this.formGroup.patchValue({
+      customerId: bookingData.customerId,
+      travelPackageId: bookingData.travelPackageId,
+      departureDate: bookingData.departureDate,
+      bookingStatus: bookingData.bookingStatus
     });
   }
 

@@ -9,7 +9,7 @@
     <div fxLayout="row" fxLayout.xs="column">
       <mat-form-field appearance="outline" class="field">
         <mat-label>Booking Id</mat-label>
-        <mat-select formControlName="id" id="id">
+        <mat-select formControlName="id" id="id" [(ngModel)]="selectedBookingId" (selectionChange)="onBookingIdSelection()">
           <mat-option *ngFor="let booking of allBookingsList" [value]="booking.id">{{booking.id}}</mat-option>
         </mat-select>
       </mat-form-field>
