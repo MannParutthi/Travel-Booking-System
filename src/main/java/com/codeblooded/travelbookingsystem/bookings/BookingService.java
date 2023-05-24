@@ -78,9 +78,18 @@ public class BookingService {
                 b.setTravelPackageId(booking.getTravelPackageId());
                 b.setDepartureDate(booking.getDepartureDate());
                 b.setBookingStatus(booking.getBookingStatus());
+
+                // Send notification to user
+                Optional<User> userProfile = userService.getAllUsers().stream().filter(customer -> customer.getId() == booking.getCustomerId()).findFirst();
+                if(userProfile.isPresent()) {
+                    String emailAddress = userProfile.get().getEmail();
+                    emailService.sendBookingUpdateEmail(emailAddress, booking.getCustomerId(), bookingId, booking.getTravelPackageId(), booking.getDepartureDate(), booking.getBookingStatus().toString());
+                }
+
                 return BOOKING_UPDATED_SUCCESSFULLY;
             }
         }
+
         return BOOKING_NOT_FOUND;
     }
 
