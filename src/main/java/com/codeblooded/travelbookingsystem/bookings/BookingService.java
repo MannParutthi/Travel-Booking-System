@@ -1,5 +1,7 @@
 package com.codeblooded.travelbookingsystem.bookings;
 
+import com.codeblooded.travelbookingsystem.service.EmailService;
+import com.codeblooded.travelbookingsystem.user.User;
 import com.codeblooded.travelbookingsystem.user.UserService;
 import com.codeblooded.travelbookingsystem.payment.Payment;
 import com.codeblooded.travelbookingsystem.travelpackages.TravelPackageService;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookingService {
@@ -24,6 +27,13 @@ public class BookingService {
     public static final String BOOKING_UPDATED_SUCCESSFULLY = "Booking Updated Successfully !";
     public static final String BOOKING_CREATED_PAYMENT_PENDING = "Booking Created, Payment Pending";
 
+    // Class instance for emailService
+    private EmailService emailService;
+
+    @Autowired
+    public BookingService(EmailService emailService) {
+        this.emailService = emailService;
+    }
 
     public BookingResponse createBooking(Booking booking) {
         // travel id & customer id exists ?
@@ -50,6 +60,14 @@ public class BookingService {
         bookings.add(bookingToBeSaved);
         bookingResponse.setMessage(BookingService.BOOKING_CREATED_PAYMENT_PENDING);
         bookingResponse.setBookingId(bookingToBeSaved.getId());
+
+        // Send notification to user
+        Optional<User> userProfile = userService.getAllUsers().stream().filter(customer -> customer.getId() == booking.getCustomerId()).findFirst();
+        if(userProfile.isPresent()) {
+            String emailAddress = userProfile.get().getEmail();
+            emailService.sendBookingConfirmationEmail(emailAddress, booking.getCustomerId(), bookingToBeSaved.getId(), payment.getId(), booking.getTravelPackageId(), booking.getDepartureDate());
+        }
+
         return bookingResponse;
     }
 

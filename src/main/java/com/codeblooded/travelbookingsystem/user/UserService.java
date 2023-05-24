@@ -1,5 +1,7 @@
 package com.codeblooded.travelbookingsystem.user;
 
+import com.codeblooded.travelbookingsystem.service.EmailService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,12 +23,26 @@ public class UserService {
     public static final String USER_CREATED_SUCCESSFULLY = "User Created Successfully !";
     public static final String USER_NOT_FOUND = "User Not Found !";
 
+
+    // Class instance for emailService
+    private EmailService emailService;
+
+    @Autowired
+    public UserService(EmailService emailService) {
+        this.emailService = emailService;
+    }
+
+
     public String createUser(User user) {
         boolean customerExists = getAllUsers().stream().anyMatch(customer -> customer.getEmail().equals(user.getEmail()));
         if(customerExists) {
             return USER_ALREADY_EXISTS;
         }
         users.add(new User(user.getFirstName(), user.getLastName(), user.getDateOfBirth(), user.getEmail(), user.getPassword(), user.getUserType()));
+
+        // Send welcome email to user
+        emailService.sendAccountRegistrationEmail(user.getEmail());
+
         return USER_CREATED_SUCCESSFULLY;
     }
 

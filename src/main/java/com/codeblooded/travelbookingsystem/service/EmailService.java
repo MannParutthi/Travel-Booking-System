@@ -5,14 +5,11 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import org.springframework.util.StreamUtils;
-
 import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.MessagingException;
 
 import java.io.IOException;
 import java.io.StringWriter;
-import java.nio.charset.StandardCharsets;
 
 // For Email templating
 import com.github.mustachejava.DefaultMustacheFactory;
@@ -45,26 +42,40 @@ public class EmailService {
         }
     }
 
-    private String renderHtmlTemplateFromFile(String templateFilePath, AccountRegistrationTemplateData templateData) {
+    public void sendAccountRegistrationEmail(String recipientEmail) {
+        String templateFilePath = "Email-Templates/NewUserRegistrationTemplate.html";
+        String subject = "Concordia Travel Booking System: Welcome to Concordia Travel Booking System";
+        AccountRegistrationTemplateData accountRegistrationTemplateData = new AccountRegistrationTemplateData(recipientEmail);
+
         try {
             MustacheFactory mustacheFactory = new DefaultMustacheFactory();
             Mustache mustache = mustacheFactory.compile(templateFilePath);
             StringWriter writer = new StringWriter();
-            mustache.execute(writer, templateData).flush();
+            mustache.execute(writer, accountRegistrationTemplateData).flush();
 
-            return writer.toString();
+            String htmlContent = writer.toString();
+            sendEmailWithTemplate(recipientEmail, subject, htmlContent);
         } catch (IOException e) {
             System.out.println("----- Error in reading HTML Template: " +  templateFilePath +"-----");
-            return null;
         }
     }
 
-    public void sendAccountRegistrationEmail(String recipientEmail) {
-        String subject = "Concordia Travel Booking System: Welcome to Concordia Travel Booking System";
-        AccountRegistrationTemplateData accountRegistrationTemplateData = new AccountRegistrationTemplateData(recipientEmail);
-        String htmlContent = renderHtmlTemplateFromFile("Email-Templates/NewUserRegistrationTemplate.html", accountRegistrationTemplateData);
+    public void sendBookingConfirmationEmail(String emailAddress, int customerID, int bookingID, int paymentID, int travelPackageID, String departureDate) {
+        String templateFilePath = "Email-Templates/BookingConfirmationTemplate.html";
+        String subject = "Concordia Travel Booking System: Booking Confirmation";
+        BookingConfirmationTemplateData bookingConfirmationTemplateData = new BookingConfirmationTemplateData(customerID, bookingID, paymentID, travelPackageID, departureDate);
 
-        sendEmailWithTemplate(recipientEmail, subject, htmlContent);
+        try {
+            MustacheFactory mustacheFactory = new DefaultMustacheFactory();
+            Mustache mustache = mustacheFactory.compile(templateFilePath);
+            StringWriter writer = new StringWriter();
+            mustache.execute(writer, bookingConfirmationTemplateData).flush();
+
+            String htmlContent = writer.toString();
+            sendEmailWithTemplate(emailAddress, subject, htmlContent);
+        } catch (IOException e) {
+            System.out.println("----- Error in reading HTML Template: " +  templateFilePath +"-----");
+        }
     }
 
     private static class AccountRegistrationTemplateData {
@@ -76,6 +87,43 @@ public class EmailService {
 
         public String getRecipientEmailAddress() {
             return recipientEmailAddress;
+        }
+    }
+
+    private static class BookingConfirmationTemplateData {
+        private final int customerID;
+        private final int bookingID;
+        private final int paymentID;
+        private final int travelPackageID;
+        private final String departureDate;
+
+
+        private BookingConfirmationTemplateData(int customerID, int bookingID, int paymentID, int travelPackageID, String departureDate) {
+            this.customerID = customerID;
+            this.bookingID = bookingID;
+            this.paymentID = paymentID;
+            this.travelPackageID = travelPackageID;
+            this.departureDate = departureDate;
+        }
+
+        public int getCustomerID() {
+            return customerID;
+        }
+
+        public int getBookingID() {
+            return bookingID;
+        }
+
+        public int getPaymentID() {
+            return paymentID;
+        }
+
+        public int getTravelPackageID() {
+            return travelPackageID;
+        }
+
+        public String getDepartureDate() {
+            return departureDate;
         }
     }
 }
