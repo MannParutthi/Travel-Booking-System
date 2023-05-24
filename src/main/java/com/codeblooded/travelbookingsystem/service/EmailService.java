@@ -60,10 +60,10 @@ public class EmailService {
         }
     }
 
-    public void sendBookingConfirmationEmail(String emailAddress, int customerID, int bookingID, int paymentID, int travelPackageID, String departureDate) {
+    public void sendBookingConfirmationEmail(String emailAddress, int customerID, int bookingID, int paymentID, int travelPackageID, String departureDate, String bookingStatus) {
         String templateFilePath = "Email-Templates/BookingConfirmationTemplate.html";
         String subject = "Concordia Travel Booking System: Booking Confirmation";
-        BookingConfirmationTemplateData bookingConfirmationTemplateData = new BookingConfirmationTemplateData(customerID, bookingID, paymentID, travelPackageID, departureDate);
+        BookingConfirmationTemplateData bookingConfirmationTemplateData = new BookingConfirmationTemplateData(customerID, bookingID, paymentID, travelPackageID, departureDate, bookingStatus);
 
         try {
             MustacheFactory mustacheFactory = new DefaultMustacheFactory();
@@ -77,6 +77,25 @@ public class EmailService {
             System.out.println("----- Error in reading HTML Template: " +  templateFilePath +"-----");
         }
     }
+
+    public void sendBookingUpdateEmail(String emailAddress, int customerID, int bookingID, int travelPackageID, String departureDate, String bookingStatus) {
+        String templateFilePath = "Email-Templates/BookingUpdateTemplate.html";
+        String subject = "Concordia Travel Booking System: Booking Confirmation";
+        BookingUpdateTemplateData bookingUpdateTemplateData = new BookingUpdateTemplateData(customerID, bookingID, travelPackageID, departureDate, bookingStatus);
+
+        try {
+            MustacheFactory mustacheFactory = new DefaultMustacheFactory();
+            Mustache mustache = mustacheFactory.compile(templateFilePath);
+            StringWriter writer = new StringWriter();
+            mustache.execute(writer, bookingUpdateTemplateData).flush();
+
+            String htmlContent = writer.toString();
+            sendEmailWithTemplate(emailAddress, subject, htmlContent);
+        } catch (IOException e) {
+            System.out.println("----- Error in reading HTML Template: " +  templateFilePath +"-----");
+        }
+    }
+
 
     private static class AccountRegistrationTemplateData {
         private final String recipientEmailAddress;
@@ -96,14 +115,16 @@ public class EmailService {
         private final int paymentID;
         private final int travelPackageID;
         private final String departureDate;
+        private final String bookingStatus;
 
 
-        private BookingConfirmationTemplateData(int customerID, int bookingID, int paymentID, int travelPackageID, String departureDate) {
+        private BookingConfirmationTemplateData(int customerID, int bookingID, int paymentID, int travelPackageID, String departureDate, String bookingStatus) {
             this.customerID = customerID;
             this.bookingID = bookingID;
             this.paymentID = paymentID;
             this.travelPackageID = travelPackageID;
             this.departureDate = departureDate;
+            this.bookingStatus = bookingStatus;
         }
 
         public int getCustomerID() {
@@ -124,6 +145,47 @@ public class EmailService {
 
         public String getDepartureDate() {
             return departureDate;
+        }
+
+        public String getBookingStatus() {
+            return bookingStatus;
+        }
+    }
+
+    private static class BookingUpdateTemplateData {
+        private final int customerID;
+        private final int bookingID;
+        private final int travelPackageID;
+        private final String departureDate;
+
+        private final String bookingStatus;
+
+        private BookingUpdateTemplateData(int customerID, int bookingID, int travelPackageID, String departureDate, String bookingStatus) {
+            this.customerID = customerID;
+            this.bookingID = bookingID;
+            this.travelPackageID = travelPackageID;
+            this.departureDate = departureDate;
+            this.bookingStatus = bookingStatus;
+        }
+
+        public int getCustomerID() {
+            return customerID;
+        }
+
+        public int getBookingID() {
+            return bookingID;
+        }
+
+        public int getTravelPackageID() {
+            return travelPackageID;
+        }
+
+        public String getDepartureDate() {
+            return departureDate;
+        }
+
+        public String getBookingStatus() {
+            return bookingStatus;
         }
     }
 }
