@@ -1,6 +1,8 @@
 package com.codeblooded.travelbookingsystem.user;
 
 import com.codeblooded.travelbookingsystem.service.EmailService;
+import com.codeblooded.travelbookingsystem.travelpackages.TravelPackage;
+import com.codeblooded.travelbookingsystem.travelpackages.TravelPackageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,12 @@ public class UserController {
         }
 
         return new ResponseEntity<String>(response, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/update/{userId}")
+    public ResponseEntity<String> updateUserProfile(@PathVariable("userId") String userId, @RequestBody User user) {
+        String response = userService.updateUserProfile(Integer.parseInt(userId), user);
+        return new ResponseEntity<String>(response, HttpStatus.OK);
     }
 
     @PostMapping("/login")
