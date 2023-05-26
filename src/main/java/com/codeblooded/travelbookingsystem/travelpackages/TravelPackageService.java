@@ -79,4 +79,14 @@ public class TravelPackageService {
     public List<TravelPackage> getAllTravelPackages() {
         return packages;
     }
+
+    public Iterable<TravelPackage> searchTravelPackages(String destinationCity) {
+        List<TravelPackage> searchResults = new ArrayList<>();
+        for(TravelPackage tp : packages) {
+            if(tp.getDestinationCity().toLowerCase().contains(destinationCity.toLowerCase())) {
+                searchResults.add(tp);
+            }
+        }
+        return searchResults;
+    }
 }

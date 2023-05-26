@@ -35,4 +35,9 @@ public class TravelPackagesController {
     public ResponseEntity<Iterable<TravelPackage>> getAllTravelPackages() {
         return new ResponseEntity<Iterable<TravelPackage>>(travelPackageService.getAllTravelPackages(), HttpStatus.OK);
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<Iterable<TravelPackage>> searchTravelPackages(@RequestParam("destinationCity") String destinationCity) {
+        return new ResponseEntity<Iterable<TravelPackage>>(travelPackageService.searchTravelPackages(destinationCity), HttpStatus.OK);
+    }
 }
