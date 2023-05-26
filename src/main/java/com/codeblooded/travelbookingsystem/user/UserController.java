@@ -1,5 +1,6 @@
 package com.codeblooded.travelbookingsystem.user;
 
+import com.codeblooded.travelbookingsystem.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ public class UserController {
         if(response == UserService.USER_ALREADY_EXISTS) {
             return new ResponseEntity<String>(response, HttpStatus.OK);
         }
+
         return new ResponseEntity<String>(response, HttpStatus.CREATED);
     }
 
