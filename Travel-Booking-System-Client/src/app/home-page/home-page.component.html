@@ -27,6 +27,10 @@
 
   <br><br>
 
+  <button mat-raised-button color="primary" style="margin: 20px" routerLink="/update-profile">
+    Update Profile
+  </button>
+
   <button *ngIf=" loggedUser != null " mat-raised-button color="primary" style="margin: 20px" (click)="logout()">
     Logout
   </button>
