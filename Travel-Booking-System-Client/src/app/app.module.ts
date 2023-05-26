@@ -27,6 +27,7 @@ import { UpdateBookingComponent } from './update-booking/update-booking.componen
 import { UpdateTravelPackageComponent } from './update-travel-package/update-travel-package.component';
 import { UserLoginComponent } from './user-login/user-login.component';
 import { PaymentComponent } from './payment/payment.component';
+import { SearchTravelPackageComponent } from './search-travel-package/search-travel-package.component';
 
 
 
@@ -41,7 +42,8 @@ import { PaymentComponent } from './payment/payment.component';
     UpdateBookingComponent,
     UpdateTravelPackageComponent,
     UserLoginComponent,
-    PaymentComponent
+    PaymentComponent,
+    SearchTravelPackageComponent
   ],
   imports: [
     BrowserModule,
