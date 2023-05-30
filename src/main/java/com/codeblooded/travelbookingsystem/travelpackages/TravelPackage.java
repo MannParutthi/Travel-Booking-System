@@ -1,12 +1,14 @@
 package com.codeblooded.travelbookingsystem.travelpackages;
 
+import com.codeblooded.travelbookingsystem.travelpackages.activities.Activity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
+@NoArgsConstructor
 @AllArgsConstructor // Lombok annotation to generate constructor with all the attributes
 @Data // Lombok annotation to generate getters and setters
 @Entity
@@ -38,12 +40,12 @@ public class TravelPackage {
     private int flightId;
 
     @ElementCollection
-    @CollectionTable(name = "ACTIVITIES", joinColumns = @JoinColumn(name = "id"))
-    @Column(name = "activityIdsIncluded", nullable = false)
-    private List<Integer> activityIdsIncluded;
+    @CollectionTable(name = "TRAVEL_PACKAGE_ACTIVITIES_MAPPING",
+            joinColumns = @JoinColumn(name = "travel_package_id"))
+    @Column(name = "activityIdsIncluded")
+    private List<Long> activityIdsIncluded;
 
     @ElementCollection
-    @CollectionTable(name = "hotel_days_with_id", joinColumns = @JoinColumn(name = "package_id"))
-    @Column(name = "hotelDaysWithId", nullable = false)
+    @CollectionTable(name = "hotelDaysWithId", joinColumns = @JoinColumn(name = "package_id"))
     private List<HotelDaysWithId> hotelDaysWithId;
 }

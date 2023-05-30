@@ -1,5 +1,6 @@
 package com.codeblooded.travelbookingsystem.travelpackages;
 
+import com.codeblooded.travelbookingsystem.travelpackages.activities.ActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,11 @@ import org.springframework.web.bind.annotation.*;
 public class TravelPackagesController {
     @Autowired
     private TravelPackageRepository travelPackageRepository;
+
+    @Autowired
+    public TravelPackagesController(TravelPackageRepository travelPackageRepository) {
+        this.travelPackageRepository = travelPackageRepository;
+    }
 
     @PostMapping("/create")
     public ResponseEntity<String> createTravelPackage(@RequestBody TravelPackage travelPackage) {

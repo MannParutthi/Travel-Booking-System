@@ -1,6 +1,7 @@
 package com.codeblooded.travelbookingsystem.bookings;
 
 import com.codeblooded.travelbookingsystem.payment.Payment;
+import com.codeblooded.travelbookingsystem.service.EmailService;
 import com.codeblooded.travelbookingsystem.travelpackages.TravelPackageRepository;
 import com.codeblooded.travelbookingsystem.travelpackages.TravelPackageService;
 import com.codeblooded.travelbookingsystem.user.User;
@@ -17,6 +18,15 @@ import org.springframework.web.bind.annotation.*;
 public class BookingsController {
     @Autowired
     private BookingsRepository bookingsRepository;
+
+    // Class instance for emailService
+    private EmailService emailService;
+
+    @Autowired
+    public BookingsController(BookingsRepository bookingsRepository, EmailService emailService) {
+        this.bookingsRepository = bookingsRepository;
+        this.emailService = emailService;
+    }
 
     @Autowired
     private TravelPackageRepository travelPackageRepository;
@@ -39,12 +49,18 @@ public class BookingsController {
             return new ResponseEntity<>(response, HttpStatus.CONFLICT);
         }
 
+        bookingsRepository.save(booking);
+
+
         // TODO: Payment
         Payment payment = new Payment();
 
-        // TODO: Email
-
-        bookingsRepository.save(booking);
+        // Email Notification
+        User customer = userRepository.findById(booking.getCustomerId());
+        if(customer != null) {
+            long bookingId = booking.getId();
+            emailService.sendBookingConfirmationEmail(customer.getEmail(), customer.getId(), bookingId, payment.getId(), booking.getTravelPackageId(), booking.getDepartureDate(), booking.getBookingStatus().name());
+        }
 
         return new ResponseEntity<>(new BookingResponse(BookingService.BOOKING_CREATED_PAYMENT_PENDING, booking.getId()), HttpStatus.CREATED);
     }
@@ -58,9 +74,17 @@ public class BookingsController {
 
         booking.setId(Long.parseLong(bookingId));
         bookingsRepository.save(booking);
+        booking = bookingsRepository.findById(Long.valueOf(bookingId)).orElse(null);
 
-        // TODO: Email
 
+        // Send email
+        User customer = userRepository.findById(booking.getCustomerId());
+        Payment payment = new Payment();
+        payment.setId(11100); // TODO: Remove
+        if(customer != null) {
+            String bookingStatus = booking.getBookingStatus().name();
+            emailService.sendBookingUpdateEmail(customer.getEmail(), customer.getId(), booking.getId(), payment.getId(), booking.getTravelPackageId(), booking.getDepartureDate(), bookingStatus);
+        }
         return new ResponseEntity<String>(BookingService.BOOKING_UPDATED_SUCCESSFULLY, HttpStatus.OK);
     }
 
@@ -77,7 +101,48 @@ public class BookingsController {
             return new ResponseEntity<>(BookingService.BOOKING_NOT_FOUND + " for ID: " + bookingId, HttpStatus.NOT_FOUND);
         }
 
+        if(booking.getBookingStatus() == Booking.BookingStatus.CANCELLED) {
+            return new ResponseEntity<>("Booking status was cancelled for ID: " + bookingId + ", therefore booking cannot be confirmed", HttpStatus.NOT_FOUND);
+        }
+
         booking.setBookingStatus(Booking.BookingStatus.CONFIRMED);
+        bookingsRepository.save(booking);
+        booking = bookingsRepository.findById(Long.valueOf(bookingId)).orElse(null);
+
+        // Send email
+        User customer = userRepository.findById(booking.getCustomerId());
+        Payment payment = new Payment();
+        payment.setId(11100); // TODO: Remove
+        if(customer != null) {
+            String bookingStatus = booking.getBookingStatus().name();
+            emailService.sendBookingUpdateEmail(customer.getEmail(), customer.getId(), booking.getId(), payment.getId(), booking.getTravelPackageId(), booking.getDepartureDate(), bookingStatus);
+        }
+
+
         return new ResponseEntity<>("Booking confirmed for ID: " + bookingId, HttpStatus.OK);
+    }
+
+    @PostMapping("/cancel/{bookingId}")
+    public ResponseEntity<String> cancelBooking(@PathVariable String bookingId) {
+        Booking booking = bookingsRepository.findById(Long.valueOf(bookingId)).orElse(null);
+        if (booking == null) {
+            return new ResponseEntity<>(BookingService.BOOKING_NOT_FOUND + " for ID: " + bookingId, HttpStatus.NOT_FOUND);
+        }
+
+        booking.setBookingStatus(Booking.BookingStatus.CANCELLED);
+        bookingsRepository.save(booking);
+
+        // TODO: Update Payment?
+
+        // Send email
+        User customer = userRepository.findById(booking.getCustomerId());
+        Payment payment = new Payment();
+        payment.setId(11100); // TODO: Remove
+        if(customer != null) {
+            String bookingStatus = booking.getBookingStatus().name();
+            emailService.sendBookingUpdateEmail(customer.getEmail(), customer.getId(), booking.getId(), payment.getId(), booking.getTravelPackageId(), booking.getDepartureDate(), bookingStatus);
+        }
+
+        return new ResponseEntity<>("Booking cancelled for ID: " + bookingId, HttpStatus.OK);
     }
 }

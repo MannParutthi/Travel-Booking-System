@@ -3,7 +3,9 @@ package com.codeblooded.travelbookingsystem.travelpackages.hotels;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @AllArgsConstructor // Lombok annotation to generate constructor with all the attributes
 @Data // Lombok annotation to generate getters and setters
 @Entity
@@ -12,7 +14,7 @@ public class Hotel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private long id;
 
     @Column(name = "location", nullable = false)
     private String location;

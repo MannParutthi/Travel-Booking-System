@@ -10,8 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @NoArgsConstructor
 @Data
 public class Payment {
-    private static final AtomicInteger count = new AtomicInteger(1000);
-    private final int id = count.incrementAndGet();
+    private long id;
 
     private String paymentMethod;
     private double amount;

@@ -3,10 +3,11 @@ package com.codeblooded.travelbookingsystem.bookings;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
-
+@NoArgsConstructor
 @AllArgsConstructor // Lombok annotation to generate constructor with all the attributes
 @Data // Lombok annotation to generate getters and setters
 @Entity
