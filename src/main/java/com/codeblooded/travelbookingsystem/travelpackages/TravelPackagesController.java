@@ -10,34 +10,38 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/tourist-packages")
 public class TravelPackagesController {
     @Autowired
-    private TravelPackageService travelPackageService;
+    private TravelPackageRepository travelPackageRepository;
 
     @PostMapping("/create")
     public ResponseEntity<String> createTravelPackage(@RequestBody TravelPackage travelPackage) {
-
-        String response = travelPackageService.createTravelPackage(travelPackage);
-        if(response == TravelPackageService.PKG_ALREADY_EXISTS) {
-            return new ResponseEntity<String>(response, HttpStatus.OK);
+        if (travelPackageRepository.existsById(travelPackage.getId())) {
+            return new ResponseEntity<>(TravelPackageService.PKG_ALREADY_EXISTS, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<String>(response, HttpStatus.CREATED);
+
+        travelPackageRepository.save(travelPackage);
+        return new ResponseEntity<>(TravelPackageService.PKG_CREATED_SUCCESSFULLY, HttpStatus.OK);
     }
 
     @PutMapping("/update/{travelPackageId}")
-    public ResponseEntity<String> updateTravelPackage(@PathVariable("travelPackageId") String travelPackageId, @RequestBody TravelPackage travelPackage) {
-        String response = travelPackageService.updateTravelPackage(Integer.parseInt(travelPackageId), travelPackage);
-        if(response == TravelPackageService.TRAVEL_PACKAGE_NOT_FOUND) {
-            return new ResponseEntity<String>(response, HttpStatus.OK);
+    public ResponseEntity<String> updateTravelPackage(@PathVariable("travelPackageId") Long travelPackageId, @RequestBody TravelPackage travelPackage) {
+        if (!travelPackageRepository.existsById(travelPackageId)) {
+            return new ResponseEntity<>(TravelPackageService.TRAVEL_PACKAGE_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<String>(response, HttpStatus.OK);
+
+        travelPackage.setId(travelPackageId);
+        travelPackageRepository.save(travelPackage);
+        return new ResponseEntity<>(TravelPackageService.PKG_UPDATED_SUCCESSFULLY, HttpStatus.OK);
     }
 
     @GetMapping("/all")
     public ResponseEntity<Iterable<TravelPackage>> getAllTravelPackages() {
-        return new ResponseEntity<Iterable<TravelPackage>>(travelPackageService.getAllTravelPackages(), HttpStatus.OK);
+        Iterable<TravelPackage> travelPackages = travelPackageRepository.findAll();
+        return ResponseEntity.ok(travelPackages);
     }
 
     @GetMapping("/search")
     public ResponseEntity<Iterable<TravelPackage>> searchTravelPackages(@RequestParam("destinationCity") String destinationCity) {
-        return new ResponseEntity<Iterable<TravelPackage>>(travelPackageService.searchTravelPackages(destinationCity), HttpStatus.OK);
+        Iterable<TravelPackage> travelPackages = travelPackageRepository.findByDestinationCity(destinationCity);
+        return ResponseEntity.ok(travelPackages);
     }
 }

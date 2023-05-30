@@ -1,7 +1,6 @@
 package com.codeblooded.travelbookingsystem.travelpackages.flights;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class FlightController {
 
     @Autowired
-    private FlightService flightService;
+    private FlightRepository flightRepository;
 
     @GetMapping("/all")
     public ResponseEntity<Iterable<Flight>> getAllFlights() {
-        return new ResponseEntity<Iterable<Flight>>(flightService.getAllFlights(), HttpStatus.OK);
+        Iterable<Flight> flights = flightRepository.findAll();
+        return ResponseEntity.ok(flights);
     }
 }

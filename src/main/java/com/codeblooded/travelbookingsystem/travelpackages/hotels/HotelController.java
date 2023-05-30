@@ -13,10 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class HotelController {
 
     @Autowired
-    private HotelService hotelService;
+    private HotelRepository hotelRepository;
 
     @GetMapping("/all")
     public ResponseEntity<Iterable<Hotel>> getAllHotels() {
-        return new ResponseEntity<Iterable<Hotel>>(hotelService.getAllHotels(), org.springframework.http.HttpStatus.OK);
+        Iterable<Hotel> hotels = hotelRepository.findAll();
+        return ResponseEntity.ok(hotels);
     }
 }

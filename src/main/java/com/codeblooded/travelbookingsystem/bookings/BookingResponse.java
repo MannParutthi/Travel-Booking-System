@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @Data
 public class BookingResponse {
     private String message;
-    private int bookingId;
+    private long bookingId;
 }
