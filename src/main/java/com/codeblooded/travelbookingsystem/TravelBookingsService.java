@@ -1,7 +1,8 @@
 package com.codeblooded.travelbookingsystem;
 
 import com.codeblooded.travelbookingsystem.bookings.BookingService;
-import com.codeblooded.travelbookingsystem.travelpackages.TravelPackageService;
+import com.codeblooded.travelbookingsystem.bookings.BookingsRepository;
+import com.codeblooded.travelbookingsystem.travelpackages.TravelPackageRepository;
 import com.codeblooded.travelbookingsystem.bookings.Booking;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,17 +14,17 @@ import java.util.List;
 public class TravelBookingsService {
 
     @Autowired
-    TravelPackageService travelPackageService;
+    TravelPackageRepository travelPackageRepository;
 
     @Autowired
-    BookingService bookingService;
+    BookingsRepository bookingsRepository;
 
     public List<TravelBookings> generateReportForBookingsAndRevenueByTravelPackage() {
         List<TravelBookings> bookingsByPackage = new ArrayList<>();
-        travelPackageService.getAllTravelPackages().forEach(travelPackage -> {
+        travelPackageRepository.findAll().forEach(travelPackage -> {
             int totalBookings = 0;
             int totalRevenue = 0;
-            for(Booking booking : bookingService.getAllBookings()) {
+            for(Booking booking : bookingsRepository.findAll()) {
                 if(booking.getTravelPackageId() == travelPackage.getId()) {
                     totalBookings++;
                 }

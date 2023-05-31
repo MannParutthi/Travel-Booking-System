@@ -60,7 +60,7 @@ public class EmailService {
         }
     }
 
-    public void sendBookingConfirmationEmail(String emailAddress, int customerID, int bookingID, int paymentID, int travelPackageID, String departureDate, String bookingStatus) {
+    public void sendBookingConfirmationEmail(String emailAddress, long customerID, long bookingID, long paymentID, long travelPackageID, String departureDate, String bookingStatus) {
         String templateFilePath = "Email-Templates/BookingConfirmationTemplate.html";
         String subject = "Concordia Travel Booking System: Booking Confirmation";
         BookingConfirmationTemplateData bookingConfirmationTemplateData = new BookingConfirmationTemplateData(customerID, bookingID, paymentID, travelPackageID, departureDate, bookingStatus);
@@ -78,10 +78,10 @@ public class EmailService {
         }
     }
 
-    public void sendBookingUpdateEmail(String emailAddress, int customerID, int bookingID, int travelPackageID, String departureDate, String bookingStatus) {
+    public void sendBookingUpdateEmail(String emailAddress, long customerID, long bookingID, long paymentID, long travelPackageID, String departureDate, String bookingStatus) {
         String templateFilePath = "Email-Templates/BookingUpdateTemplate.html";
         String subject = "Concordia Travel Booking System: Booking Confirmation";
-        BookingUpdateTemplateData bookingUpdateTemplateData = new BookingUpdateTemplateData(customerID, bookingID, travelPackageID, departureDate, bookingStatus);
+        BookingUpdateTemplateData bookingUpdateTemplateData = new BookingUpdateTemplateData(customerID, bookingID, paymentID, travelPackageID, departureDate, bookingStatus);
 
         try {
             MustacheFactory mustacheFactory = new DefaultMustacheFactory();
@@ -110,15 +110,15 @@ public class EmailService {
     }
 
     private static class BookingConfirmationTemplateData {
-        private final int customerID;
-        private final int bookingID;
-        private final int paymentID;
-        private final int travelPackageID;
+        private final long customerID;
+        private final long bookingID;
+        private final long paymentID;
+        private final long travelPackageID;
         private final String departureDate;
         private final String bookingStatus;
 
 
-        private BookingConfirmationTemplateData(int customerID, int bookingID, int paymentID, int travelPackageID, String departureDate, String bookingStatus) {
+        private BookingConfirmationTemplateData(long customerID, long bookingID, long paymentID, long travelPackageID, String departureDate, String bookingStatus) {
             this.customerID = customerID;
             this.bookingID = bookingID;
             this.paymentID = paymentID;
@@ -127,19 +127,19 @@ public class EmailService {
             this.bookingStatus = bookingStatus;
         }
 
-        public int getCustomerID() {
+        public long getCustomerID() {
             return customerID;
         }
 
-        public int getBookingID() {
+        public long getBookingID() {
             return bookingID;
         }
 
-        public int getPaymentID() {
+        public long getPaymentID() {
             return paymentID;
         }
 
-        public int getTravelPackageID() {
+        public long getTravelPackageID() {
             return travelPackageID;
         }
 
@@ -153,30 +153,35 @@ public class EmailService {
     }
 
     private static class BookingUpdateTemplateData {
-        private final int customerID;
-        private final int bookingID;
-        private final int travelPackageID;
+        private final long customerID;
+        private final long bookingID;
+        long paymentID;
+        private final long travelPackageID;
         private final String departureDate;
 
         private final String bookingStatus;
 
-        private BookingUpdateTemplateData(int customerID, int bookingID, int travelPackageID, String departureDate, String bookingStatus) {
+        private BookingUpdateTemplateData(long customerID, long bookingID, long paymentID, long travelPackageID, String departureDate, String bookingStatus) {
             this.customerID = customerID;
             this.bookingID = bookingID;
+            this.paymentID = paymentID;
             this.travelPackageID = travelPackageID;
             this.departureDate = departureDate;
             this.bookingStatus = bookingStatus;
         }
 
-        public int getCustomerID() {
+        public long getCustomerID() {
             return customerID;
         }
 
-        public int getBookingID() {
+        public long getBookingID() {
             return bookingID;
         }
+        public long getPaymentID() {
+            return paymentID;
+        }
 
-        public int getTravelPackageID() {
+        public long getTravelPackageID() {
             return travelPackageID;
         }
 
